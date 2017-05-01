@@ -10,11 +10,14 @@ import android.widget.FrameLayout;
 
 public class MainActivity extends AppCompatActivity {
     private FloatingActionButton currentOption, fab1, fab2, fab3;
+    private boolean clicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        clicked = false;
 
 
 
@@ -28,12 +31,26 @@ public class MainActivity extends AppCompatActivity {
                 Animation show_fab_1 = AnimationUtils.loadAnimation(getApplication(), R.anim.fab1_show);
                 Animation hide_fab_1 = AnimationUtils.loadAnimation(getApplication(), R.anim.fab1_hide);
 
-                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) fab1.getLayoutParams();
-                layoutParams.rightMargin += (int) (fab1.getWidth() * 1.7);
-                layoutParams.bottomMargin += (int) (fab1.getHeight() * 0.25);
-                fab1.setLayoutParams(layoutParams);
-                fab1.startAnimation(show_fab_1);
-                fab1.setClickable(true);
+
+                if (clicked == false) {
+                    FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) fab1.getLayoutParams();
+                    layoutParams.rightMargin += (int) (fab1.getWidth() * 1.7);
+                    layoutParams.bottomMargin += (int) (fab1.getHeight() * 0.25);
+                    fab1.setLayoutParams(layoutParams);
+                    fab1.startAnimation(show_fab_1);
+                    fab1.setClickable(true);
+                    clicked = true;
+                }
+                else {
+                    FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) fab1.getLayoutParams();
+                    layoutParams.rightMargin -= (int) (fab1.getWidth() * 1.7);
+                    layoutParams.bottomMargin -= (int) (fab1.getHeight() * 0.25);
+                    fab1.setLayoutParams(layoutParams);
+                    fab1.startAnimation(hide_fab_1);
+                    fab1.setClickable(false);
+                    clicked = false;
+                }
+
             }
         });
 
