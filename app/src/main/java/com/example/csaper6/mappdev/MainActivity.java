@@ -1,8 +1,10 @@
 package com.example.csaper6.mappdev;
 
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -25,20 +27,36 @@ public class MainActivity extends AppCompatActivity {
         fab3Selected = false;
         wireFabs();
 
-
-        currentOption.setOnClickListener(new View.OnClickListener() {
+        currentOption.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                if (clicked == false) {
-                    openFabs(); //expand direction type selection menu
-                }
-                else {
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    openFabs();
+                    Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                    v.vibrate(50);
+
+
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     closeFabs();
                 }
+                return true;
             }
 
-
         });
+
+//        currentOption.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (clicked == false) {
+//                    openFabs(); //expand direction type selection menu
+//                }
+//                else {
+//                    closeFabs();
+//                }
+//            }
+//
+//
+//        });
 
 
     }
